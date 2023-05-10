@@ -1,6 +1,8 @@
 package Tablas;
 
-public class Candidatures {
+import DAO.CandidaturesDAODB;
+
+public class Candidatures extends CandidaturesDAODB {
 
     int eleccio_id, candidatura_id;
     String codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulacio_nacional;

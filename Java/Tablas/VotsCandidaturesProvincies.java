@@ -1,6 +1,8 @@
 package Tablas;
 
-public class VotsCandidaturesProvincies {
+import DAO.VotsCandidaturesProvinciesDAODB;
+
+public class VotsCandidaturesProvincies extends VotsCandidaturesProvinciesDAODB {
     Provincia provincia;
     Candidatures candidatura;
     int vots,candidats_obtinguts;

@@ -1,6 +1,8 @@
 package Tablas;
 
-public class VotsCandidaturesCa {
+import DAO.VotsCandidaturesCaDAODB;
+
+public class VotsCandidaturesCa extends VotsCandidaturesCaDAODB {
     Candidatures candidatura;
     ComAutonoma comAutonoma;
     int vots;
