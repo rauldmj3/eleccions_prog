@@ -1,14 +1,21 @@
 package Tablas;
 
-public class ComAutonoma {
+import DAO.ComAutonomaDAODB;
+
+public class ComAutonoma extends ComAutonomaDAODB {
     int comAutonoma_id;
     String nom;
     String codi_ine;
 
     public ComAutonoma(int comAutonoma_id, String nom, String codi_ine) {
         this.comAutonoma_id = comAutonoma_id;
+        set(nom,codi_ine);
+    }
+
+    public void set(String nom,String codi_ine) {
         this.nom = nom;
         this.codi_ine = codi_ine;
+
     }
 
     public int getComAutonoma_id() {
