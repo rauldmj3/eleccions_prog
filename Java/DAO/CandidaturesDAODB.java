@@ -22,8 +22,7 @@ public class CandidaturesDAODB implements DAODB<Candidatures> {
         statement.setString(5, c.getCodi_acumulacio_provincia());
         statement.setString(6, c.getCodi_acumulacio_ca());
         statement.setString(7, c.getCodi_acumulacio_nacional());
-        statement.executeUpdate();
-        statement.executeQuery(query);
+        statement.execute();
         statement.close();
     }
 
@@ -35,19 +34,32 @@ public class CandidaturesDAODB implements DAODB<Candidatures> {
     }
 
     public Candidatures read(int id, Connection conn) throws SQLException {
-        String query = "SELECT eleccio_id,codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulacio_nacional FROM " + taula + " WHERE candidatura_id=?";
+        String query = "SELECT * FROM " + taula + " WHERE candidatura_id=?";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setInt(1, id);
-        statement.executeUpdate();
         ResultSet resultat = statement.executeQuery(query);
         if (resultat == null) {
             statement.close();
             return null;
         }
         resultat.next();
+        int eleccio_id;
+        String codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulacio_nacional;
+
+        try {
+            eleccio_id = resultat.getInt("eleccio_id");
+            codi_candidatura=resultat.getString("codi_candidatura");
+            nom_curt= resultat.getString("nom_curt");
+            nom_llarg= resultat.getString("nom_llarg");
+            codi_acumulacio_provincia =resultat.getString("codi_acumulacio_provincia"); ;
+            codi_acumulacio_ca= resultat.getString("codi_acumulacio_ca");
+            codi_acumulacio_nacional= resultat.getString("codi_acumulacio_nacional");
+        }catch (Exception e){
+            return null;
+        }
         resultat.close();
         statement.close();
-        return new Candidatures(id, resultat.getInt("eleccio_id"), resultat.getString("codi_candidatura"), resultat.getString("nom_curt"), resultat.getString("nom_llarg"), resultat.getString("codi_acumulacio_provincia"), resultat.getString("codi_acumulacio_ca"), resultat.getString("codi_acumulacio_nacional"));
+        return new Candidatures(id,eleccio_id, codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulacio_nacional);
     }
 
     public void update(Candidatures c, Connection conn) throws SQLException {
@@ -61,8 +73,7 @@ public class CandidaturesDAODB implements DAODB<Candidatures> {
         statement.setString(6, c.getCodi_acumulacio_ca());
         statement.setString(7, c.getCodi_acumulacio_nacional());
         statement.setInt(8, c.getCandidatura_id());
-        statement.executeUpdate();
-        statement.executeQuery(query);
+        statement.execute();
         statement.close();
     }
 
@@ -70,40 +81,12 @@ public class CandidaturesDAODB implements DAODB<Candidatures> {
         String query = "DELETE FROM " + taula + " WHERE candidatura_id=?";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setInt(1, c.getCandidatura_id());
-        statement.executeUpdate();
-        statement.executeQuery(query);
+        statement.execute();
         statement.close();
     }
 
     // ALTRES DAO
     public boolean exists(Candidatures c, Connection conn) throws SQLException {
         return read(c, conn);
-    }
-
-    public int count(Connection conn) throws SQLException {
-        String query = "SELECT COUNT(*) FROM " + taula;
-        PreparedStatement statement = conn.prepareStatement(query);
-        statement.executeUpdate();
-        ResultSet resultat = statement.executeQuery(query);
-        resultat.next();
-        int countComanda = resultat.getInt("COUNT(*)");
-        resultat.close();
-        statement.close();
-        return countComanda;
-    }
-
-    public List<Candidatures> all(Connection conn) throws SQLException {
-        String query = ("SELECT * FROM " + taula);
-        Statement statement = conn.createStatement();
-        ResultSet resultat = statement.executeQuery(query);
-        List<Candidatures> le = new LinkedList<>();
-        Candidatures c;
-        while (resultat.next()) {
-            c = new Candidatures(resultat.getInt("candidatura_id"), resultat.getInt("eleccio_id"), resultat.getString("codi_candidatura"), resultat.getString("nom_curt"), resultat.getString("nom_llarg"), resultat.getString("codi_acumulacio_provincia"), resultat.getString("codi_acumulacio_ca"), resultat.getString("codi_acumulacio_nacional"));
-            le.add(c);
-        }
-        resultat.close();
-        statement.close();
-        return le;
     }
 }
