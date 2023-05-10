@@ -1,6 +1,8 @@
 package Tablas;
 
-public class Provincia {
+import DAO.ProvinciaDAODB;
+
+public class Provincia extends ProvinciaDAODB {
     int provincia_id;
     ComAutonoma comAutonoma;
     String nom;
@@ -9,6 +11,15 @@ public class Provincia {
 
     public Provincia(int provincia_id, ComAutonoma comAutonoma, String nom, String codi_ine, int num_escons) {
         this.provincia_id = provincia_id;
+        set(comAutonoma,nom,codi_ine,num_escons);
+    }
+
+    public Provincia(int provincia_id){
+        this.provincia_id = provincia_id;
+        set(null,null,null,0);
+    }
+
+    public void set(ComAutonoma comAutonoma, String nom, String codi_ine, int num_escons){
         this.comAutonoma = comAutonoma;
         this.nom = nom;
         this.codi_ine = codi_ine;
