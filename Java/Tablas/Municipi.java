@@ -9,6 +9,10 @@ public class Municipi {
 
     public Municipi(int municipi_id, String nom, String codi_ine, Provincia provincia, String districte) {
         this.municipi_id = municipi_id;
+        set(nom, codi_ine, provincia, districte);
+    }
+
+    public void set(String nom, String codi_ine, Provincia provincia, String districte){
         this.nom = nom;
         this.codi_ine = codi_ine;
         this.provincia = provincia;
