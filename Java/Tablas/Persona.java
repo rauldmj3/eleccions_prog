@@ -1,9 +1,11 @@
 package Tablas;
 
+import DAO.PersonaDAODB;
+
 import java.io.IOException;
 import java.sql.*;
 
-public class Persona {
+public class Persona extends PersonaDAODB {
     int persona_id;
     String nom;
     String cog1;
@@ -14,13 +16,17 @@ public class Persona {
 
     public Persona(int persona_id, String nom, String cog1, String cog2, String sexe, Date data_naix, String dni) {
         this.persona_id = persona_id;
+        set(nom, cog1, cog2, sexe, data_naix, dni);
+    }
+
+    public void set(String nom, String cog1, String cog2, String sexe, Date data_naix, String dni){
         this.nom = nom;
         this.cog1 = cog1;
         this.cog2 = cog2;
         this.sexe = sexe;
         this.data_naix = data_naix;
         this.dni = dni;
-    }
+    };
 
     public int getPersona_id() {
         return persona_id;
